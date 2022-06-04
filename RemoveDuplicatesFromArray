@@ -1,0 +1,26 @@
+import java.util.*;
+public class Solution {
+	public static int removeDuplicates(ArrayList<Integer> nums,int n) {
+		 //brute force -duplicates form sorted array
+
+        //hashset to get unique elments
+        //O(nlogn)
+        HashSet<Integer> hs = new HashSet<>();
+
+        //adding elements to hs
+        for (int i = nums.size()-1; i >=0; i--) {
+            hs.add(nums.get(i));
+			nums.remove(i);
+        }
+
+        //total unique elems
+        int k = hs.size();
+        
+        //getting values for hs and adding to array
+        for (Integer val : hs) {
+            nums.add(val);
+        }
+         
+        return k;
+	}
+}
