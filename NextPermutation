@@ -1,0 +1,51 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Solution 
+{
+	public static ArrayList<Integer> nextPermutation(ArrayList<Integer> nums) 
+	{
+        int prefixIndex= -1;
+		//have first index element where nums[i] < nums[i+1]
+        for(int i=nums.size()-2;i>=0;i--){
+            if(nums.get(i) < nums.get(i+1)){
+                prefixIndex= i;
+                break;
+            }
+        }
+        
+        if(prefixIndex==-1){
+            reverse(nums,0);
+            return nums;
+        }
+        
+        //find first secondindex value greater than prefix index from lasst
+        int secondIndex= nums.size()-1;
+        for(int i=nums.size()-1;i>=0;i--){
+            if(nums.get(i) > nums.get(prefixIndex)){
+                secondIndex= i;
+                break;
+            }
+        }
+        
+       Collections.swap(nums, prefixIndex, secondIndex);
+        
+        //reverse array from prefix index + 1
+        reverse(nums,prefixIndex + 1);
+        return nums;
+        
+	}
+    
+    public static void reverse(ArrayList<Integer> nums,int idx){
+        int i=idx;
+        int j=nums.size()-1;
+        
+        while(i<j){
+         Collections.swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+}
