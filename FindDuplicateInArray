@@ -1,0 +1,27 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution{
+    public static int findDuplicate(ArrayList<Integer> nums, int n){
+        
+        //using tortoise method, representing array as LL,and finding 
+        //starting point of LL
+        
+        int slow= nums.get(0);
+        int fast= nums.get(0);
+        
+        do{
+            slow= nums.get(slow);
+            fast= nums.get(nums.get(fast));
+        }while(slow!=fast);
+        
+        slow= nums.get(0);
+        while(slow!=fast){
+            slow= nums.get(slow);
+            fast= nums.get(fast);
+        }
+        
+        return slow;
+    }
+}
