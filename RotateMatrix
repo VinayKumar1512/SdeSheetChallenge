@@ -1,0 +1,85 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+    public static void rotateMatrix(ArrayList<ArrayList<Integer>> mat, int n, int m) {
+      
+        for(int s=1;s<=Math.min(n/2,m/2);s++){
+            ArrayList<Integer> list=new ArrayList<>();
+              fillonedfrom2d(mat,s,n,m,list);
+              rotate(list);
+              fill2dfromoned(list,s,n,m,mat);
+        }
+      
+    }
+    
+    public static void fill2dfromoned(ArrayList<Integer> list,int s,int n,int m,ArrayList<ArrayList<Integer>> mat){
+        int minr=s-1;
+        int minc=s-1;
+        int maxr= n-s;
+        int maxc= m-s;
+        int idx=0;
+        //top wall
+        for(int i= minr,j=minc;j<=maxc;j++){
+            mat.get(i).set(j,list.get(idx));
+            idx++;
+        }
+        minr++;
+        for(int i= minr,j=maxc;i<=maxr;i++){
+           mat.get(i).set(j,list.get(idx));
+            idx++;
+        }
+        maxc--;
+        for(int i= maxr,j=maxc;j>=minc;j--){
+            mat.get(i).set(j,list.get(idx));
+            idx++;
+        }
+        maxr--;
+        for(int i= maxr,j=minc;i>=minr;i--){
+            mat.get(i).set(j,list.get(idx));
+            idx++;
+        }
+        minc++;
+    }
+    
+    public static void fillonedfrom2d(ArrayList<ArrayList<Integer>> mat,int s,int n,int m,ArrayList<Integer> list){
+        int minr=s-1;
+        int minc=s-1;
+        int maxr= n-s;
+        int maxc= m-s;
+        
+        //top wall
+        for(int i= minr,j=minc;j<=maxc;j++){
+            list.add(mat.get(i).get(j));
+        }
+        minr++;
+        for(int i= minr,j=maxc;i<=maxr;i++){
+            list.add(mat.get(i).get(j));
+        }
+        maxc--;
+        for(int i= maxr,j=maxc;j>=minc;j--){
+            list.add(mat.get(i).get(j));
+        }
+        maxr--;
+        for(int i= maxr,j=minc;i>=minr;i--){
+            list.add(mat.get(i).get(j));
+        }
+        minc++;
+    }
+    
+    public static void rotate(ArrayList<Integer> al){
+        reverse(al,0,al.size()-2);
+        reverse(al,0,al.size()-1);
+    }
+    
+    public static void reverse(ArrayList<Integer> al,int si,int ei){
+        int i= si;
+        int j= ei;
+        while( i <j){
+            Collections.swap(al,i,j);
+            i++;
+            j--;
+        }
+    }
+}
