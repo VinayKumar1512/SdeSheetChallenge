@@ -1,0 +1,32 @@
+import java.util.*;
+import java.io.*; 
+public class Solution {
+    public static int modularExponentiation(int x, int n, int m) {
+               
+  //we use recursion to calcualte modular exponentation,if we calculate if by doing Math.pow than for large numbers our power exceed int,long range,so to avoid this ,we use property of laws of associtivity,comutativity
+        //i.e (a*b)%m= ((a%b)*(b%m))%m
+        //similarly (x^n)%m= (x^n/2%m * x^n/2%m)%m for even
+        // (x^n)%m= (x%m * x^n-1%m)%m for odd power
+        //1 for n==0
+        
+        long res= moduloExpo(x,n,m);
+        int ans= (int) res;
+        return ans;
+    }
+    
+    public static long moduloExpo(int x,int n,int m){
+         if(n==0){
+            return 1;
+        }
+       
+        //faith that method will give us modular of x,n/2,m
+        long pow = modularExponentiation(x,n/2,m);
+        long res= (pow * pow)%m;
+        //for odd modulo is x%m * even res whole modulo
+        if(n%2!=0){
+            res= ((x%m)*res)%m;
+        }
+        
+        return res; 
+    }
+}
