@@ -1,0 +1,31 @@
+import javafx.util.Pair;
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+public static int[] missingAndRepeating(ArrayList<Integer> arr, int n) {	
+      int res[]=new int[arr.size()+1];
+       
+      for(int i=0;i<arr.size();i++){
+          res[arr.get(i)]++;
+      }
+      
+      int repeat= 0;
+      int missing=0;
+        
+      for(int i=1;i<res.length;i++){
+          if(res[i]==2){
+              repeat=i;
+          }
+          
+         if(res[i]==0){
+             missing=i;
+          }
+      }
+    
+     int ans[]=new int[2];
+     ans[0]=missing;
+     ans[1]= repeat;
+     return ans;
+	}
+}
