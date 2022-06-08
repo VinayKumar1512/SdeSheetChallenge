@@ -1,0 +1,64 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    static long count=0;
+    public static long getInversions(long arr[], int n) {
+        mergeSort(arr,n,0,arr.length-1);
+        return count;
+    }
+    
+    //O(nlogn)
+     public static long[] mergeTwoArrays(long a[],long b[]){
+      int i=0;
+      int j=0;
+      int k=0;
+        
+        long res[]=new long[a.length + b.length];
+        while(i < a.length && j < b.length){
+            if(a[i] <= b[j]){
+                res[k] = a[i];
+                i++;
+                k++;
+            }
+            else{
+                res[k]= b[j];
+                count+= (a.length - i);
+                j++;
+                k++;
+            }
+        }
+        
+        while(i<a.length){
+            res[k]= a[i];
+            i++;
+            k++;
+        }
+        
+        while(j<b.length){
+            res[k]=b[j];
+            j++;
+            k++;
+        }
+        
+        return res;
+    }
+    
+    public static long[] mergeSort(long arr[],int n,int low,int high){
+        
+        if(low == high){
+            long base[]=new long[1];
+            base[0]= arr[low];
+            return base;
+        }
+        
+        int mid= (low + high)/2;
+        
+       long left[]= mergeSort(arr,n,low,mid);
+       long right[]=mergeSort(arr,n,mid+1,high);
+        
+        long res[]= mergeTwoArrays(left,right);
+        
+        return res;
+        
+    }
+}
