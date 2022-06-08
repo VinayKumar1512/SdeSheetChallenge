@@ -1,0 +1,32 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+	public static int uniquePaths(int m, int n) {
+		
+        int dp[][]=new int[m][n];
+        return getPaths(m,n,0,0,m-1,n-1,dp);
+	}
+    
+    //dfs + memoization dp
+    public static int getPaths(int m,int n,int sr,int sc,int dr,int dc,int dp[][]){
+        if(sr==dr && sc==dc){
+            return 1;
+        }
+        
+        if(sr > dr || sc> dc){
+            return 0;
+        }
+        
+        if(dp[sr][sc]!=0){
+            return dp[sr][sc];
+        }
+        
+        int f1= getPaths(m,n,sr+1,sc,dr,dc,dp);
+        int f2= getPaths(m,n,sr,sc+1,dr,dc,dp);
+        
+        //storing res
+        int ans= f1 + f2;
+        dp[sr][sc]=ans;
+        return ans;
+    }
+}
