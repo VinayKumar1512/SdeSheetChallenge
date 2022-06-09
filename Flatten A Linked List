@@ -1,0 +1,68 @@
+import java.util.* ;
+import java.io.*; 
+/****************************************************************
+
+       Following is the class structure of the Node class:
+
+       class Node {
+	int data;
+	Node next;
+	Node child;
+
+	public Node(int data) {
+		this.data = data;
+		this.next = null;
+		this.child = null;
+	}
+}
+
+*****************************************************************/
+public class Solution {
+
+  public static Node sortTwoLists(Node first,Node second) {
+        
+       Node dummy= new Node(-1);
+       Node prev= dummy;
+        
+       Node temp1= first;
+       Node temp2= second;
+        
+        while(temp1!=null && temp2!=null){
+            
+            if(temp1.data <= temp2.data){
+                prev.child= temp1;
+                temp1= temp1.child;
+                prev =prev.child;
+            }
+            else{
+               prev.child = temp2;
+               temp2= temp2.child;
+                prev=prev.child;
+            }
+        }
+        
+        if(temp1!=null){
+            prev.child= temp1;
+        }
+        
+        if(temp2!=null){
+            prev.child=temp2;
+        }
+          
+        return dummy.child;
+    }
+    
+	public static Node flattenLinkedList(Node start) {
+        
+       if(start==null || start.next==null){
+           return start;
+       }
+        
+        //faith that it will flatten start.next lists
+        start.next= flattenLinkedList(start.next);
+        Node res= sortTwoLists(start,start.next);
+        
+        return res;
+	}
+}
+
