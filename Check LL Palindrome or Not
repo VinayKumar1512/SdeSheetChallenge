@@ -1,0 +1,77 @@
+import java.util.* ;
+import java.io.*; 
+/****************************************************************
+
+    Following is the class structure of the LinkedListNode class:
+	
+	class LinkedListNode<T> {
+    	T data;
+    	LinkedListNode<T> next;
+
+    	public LinkedListNode(T data) {
+        	this.data = data;
+    	}
+	}
+
+*****************************************************************/
+
+public class Solution {
+    
+    public static LinkedListNode<Integer> middleofLL(LinkedListNode<Integer> head){
+       
+        //have first node as mid in case of even so modified while condition from fast!=null && fast.next!=null to fast.next!=null && fast.next.next!=null
+        LinkedListNode<Integer> slow= head;
+        LinkedListNode<Integer> fast= head;
+        
+        while(fast.next!=null && fast.next.next!=null){
+            slow= slow.next;
+            fast=fast.next.next;
+        }
+        
+        return slow;
+    }
+    
+    public static LinkedListNode<Integer> reverseLL(LinkedListNode<Integer> head){
+        LinkedListNode<Integer> prev=null;
+        LinkedListNode<Integer> curr= head;
+        
+        while(curr!=null){
+            LinkedListNode<Integer> currnext= curr.next;
+            curr.next= prev;
+            prev=curr;
+            curr= currnext;
+        }
+        
+        return prev;
+    }
+
+	public static boolean isPalindrome(LinkedListNode<Integer> head) {
+        
+        if (head == null || head.next == null) return true;
+        
+		LinkedListNode<Integer> mid= middleofLL(head);
+        LinkedListNode<Integer> shead= mid.next;
+        mid.next=null;
+        shead = reverseLL(shead);
+        
+        LinkedListNode<Integer> temp1= head;
+        LinkedListNode<Integer> temp2= shead;
+        
+        boolean flag=true;
+        while(temp2!=null){
+            
+            if(temp1.data.equals(temp2.data)==false){
+               flag= false;
+                break;
+            }
+            
+            temp1=temp1.next;
+            temp2=temp2.next;
+        }
+        
+         shead = reverseLL(shead);
+         mid.next = shead;
+        
+        return flag;
+	}
+}
