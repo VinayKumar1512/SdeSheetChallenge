@@ -1,0 +1,47 @@
+import java.util.* ;
+import java.io.*; 
+/*************************************************************
+
+    Following is the LinkedListNode class structure
+
+    class LinkedListNode<T> {
+	    T data;
+	    LinkedListNode<T> next;
+	    LinkedListNode<T> random;
+
+	    public LinkedListNode(T data) {
+		    this.data = data;
+	    }
+    }
+
+*************************************************************/
+
+public class Solution {
+	public static LinkedListNode<Integer> cloneRandomList(LinkedListNode<Integer> head) {
+		
+        //creating deep copy of list first ,than adjusting it's random pointers ,as intially the node may node exist to which intial node oints with random pointer
+        LinkedListNode dummy = new LinkedListNode(-1);
+        LinkedListNode prev= dummy;
+        HashMap<LinkedListNode,LinkedListNode> hm = new HashMap<>();
+        hm.put(null,null);
+        LinkedListNode curr= head;
+        
+        while(curr!=null){
+            LinkedListNode nn= new LinkedListNode(curr.data);
+            prev.next= nn;
+            hm.put(curr,nn);
+            prev=prev.next;
+            curr= curr.next;
+        }
+        
+        curr= head;
+        //adjusting random pointers
+        while(curr!=null){
+            LinkedListNode copyNode= hm.get(curr);
+            copyNode.random= hm.get(curr.random);
+            curr = curr.next;
+        }
+        
+        return dummy.next;
+	}
+}
