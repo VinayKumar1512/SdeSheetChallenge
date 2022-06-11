@@ -1,0 +1,60 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution 
+{
+ public static ArrayList<Integer> majorityElementII(ArrayList<Integer> arr) {
+       //morre's voting algo,approach similar to majority 1
+     //there are only 2 marjority element possible for n/3 dry run to'
+     //check
+     int n= arr.size();
+     ArrayList<Integer> ans= new ArrayList<>();
+     int elem1= -1;
+     int elem2= -1;
+     
+     int c1=0;
+     int c2=0;
+     
+     for(int i=0;i<arr.size();i++){
+         
+         if(c1==0){
+             elem1= arr.get(i);
+         }
+         if(c2==0){
+             elem2= arr.get(i);
+         }
+         
+         if(elem1==arr.get(i)){
+             c1++;
+         }
+         else if(elem2==arr.get(i)){
+             c2++;
+         }
+         else{
+             c1--;
+             c2--;
+         }
+     }
+     
+     int rc1=0;
+     int rc2=0;
+      for(int i=0;i<arr.size();i++){
+         if(arr.get(i)==elem1){
+             rc1++;
+         }
+          else if(arr.get(i)==elem2){
+              rc2++;
+          }
+     }
+    
+     if(rc1 > n/3){
+         ans.add(elem1);
+     }
+     if(rc2 >n/3){
+         ans.add(elem2);
+     }
+     
+     return ans;
+    }
+}
