@@ -1,0 +1,32 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution 
+{
+	public static int uniqueSubstrings(String input) 
+    {
+		int start=0;
+        int end=0;
+        int length=0;
+        
+        //map of char ,index of char 
+        HashMap<Character,Integer> hm= new HashMap<>();
+        while(end < input.length()){
+            
+            char ch= input.charAt(end);
+            
+            //means we have duplicate charter in range [start,end]
+            //so we need to update start so that we can have unique element, start will max of index at which repeat char occur + 1,start index it is already present
+            //dry run on example for more understanding
+            if(hm.containsKey(ch)==true){
+                start= Math.max(hm.get(ch)+1,start);
+            }
+            
+            hm.put(ch,end);
+            length= Math.max(length,end-start+1);
+            end++;
+        }
+        
+        //longest substring without repating char
+        return length;
+	}
+}
