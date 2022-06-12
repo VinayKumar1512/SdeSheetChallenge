@@ -1,0 +1,36 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+	public static int subarraysXor(ArrayList<Integer> arr, int x) {
+		
+        int xor=0;
+        int count=0;
+        //hashmap prefix xor vs count of times that xor appear
+        //if y^k=xr ,y=xr^k,that's it we have to find the no. of times y appear than we have x xor,also keep count increasing when we get xor==x
+        HashMap<Integer,Integer> hm= new HashMap<>();
+        for(int i=0;i<arr.size();i++){
+            xor^=arr.get(i);
+            
+            if(xor==x){
+                count++;
+            }
+            
+            //if we found y than their exist xor x no. of times y appear so add y count to count times the xor appear
+            if(hm.containsKey(xor^x)==true){
+                count+=hm.get(xor^x);
+            }
+            
+            //keeping track of prefix count 
+            if(hm.containsKey(xor)==true){
+                hm.put(xor,hm.get(xor)+1);
+            }
+            else{
+                hm.put(xor,1);
+            }
+        }
+        
+        return count;
+	}
+}
