@@ -1,0 +1,46 @@
+import java.util.*;
+public class Solution {
+    
+    public static class Pair{
+        int pos;
+        int start;
+        int end;
+        
+        Pair(int pos,int start,int end){
+            this.pos= pos;
+            this.start= start;
+            this.end= end;
+        }
+    }
+    public static List<Integer> maximumMeetings(int[] start, int[] end) {        
+        
+        ArrayList<Pair> list =new ArrayList<>();
+      
+        //creating pairs so that we can sort values based on end time
+        for(int i=0;i<start.length;i++){
+            list.add(new Pair(i+1,start[i],end[i]));    
+        }
+        
+        //sorting using lambda expression
+        
+        Collections.sort(list,(a,b) -> a.end - b.end);
+        
+        //having meeting that are possible
+        
+        List<Integer> ans = new ArrayList<>();
+        int endtime= list.get(0).end;
+        //first meeting is always possible
+        ans.add(list.get(0).pos);
+        for(int i=1;i<list.size();i++){
+            
+            //meeting is possible
+            if(list.get(i).start > endtime){
+                int ends= list.get(i).end;
+                ans.add(list.get(i).pos);
+                endtime= list.get(i).end;
+            }
+        }
+        
+        return ans;
+    }
+}
