@@ -1,0 +1,49 @@
+import java.util.*;
+public class Solution
+{
+    public static class Pair{
+        int deadline;
+        int profit;
+        
+        Pair(int deadline,int profit){
+            this.deadline= deadline;
+            this.profit= profit;
+        }
+    }
+    public static int jobScheduling(int[][] jobs)
+    {
+        //sort in desceding order of profit so that we can complete job with maximum profit first
+        
+        ArrayList<Pair> list =new ArrayList<>();
+        for(int i=0;i<jobs.length;i++){
+            list.add(new Pair(jobs[i][0],jobs[i][1]));
+        }
+        
+        Collections.sort(list, (a,b) -> b.profit - a.profit);
+        
+        int maxi=0;
+         for(int i=0;i<list.size();i++){
+            maxi= Math.max(maxi,list.get(i).deadline);
+        }
+        
+        //array to keep track that job must be completed at last day ,so that max jbos cna be completed
+        int result[]= new int[maxi+1];
+        
+        int profit=0;
+        
+        for(int i=0;i<list.size();i++){
+            
+            for(int j=list.get(i).deadline;j>=1;j--){
+                //means job can be completed
+                if(result[j]==0){
+                    profit+= list.get(i).profit;
+                    result[j]= 1;
+                    break;
+                }
+            }
+            
+        }
+        
+        return profit;
+    }
+}
