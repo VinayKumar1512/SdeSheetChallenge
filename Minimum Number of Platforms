@@ -1,0 +1,43 @@
+import java.util.*;
+public class Solution {
+    
+    public static class Pair{
+        int start;
+        int dep;
+        
+        Pair(int start,int dep){
+            this.start= start;
+            this.dep= dep;
+        }
+    }
+    public static int calculateMinPatforms(int at[], int dt[], int n) {
+       
+        //if i get no. of overlapping trains a particular interval than i will get the no. of platform needed
+        Arrays.sort(at);
+        Arrays.sort(dt);
+        
+        int minPlatforms= 1;
+        int result=1;
+        
+        int i=1;
+        int j=0;
+        while(i < at.length && j< dt.length){
+            
+            //if we need platform
+            if(at[i] <= dt[j]){
+                minPlatforms++;
+                i++;
+            }
+            //when a platfomr get free
+            else{
+                minPlatforms--;
+                j++;
+            }
+            
+            //max vlaue at any point of time for minPlatfomrs is our result
+            result= Math.max(result,minPlatforms);
+        }
+        
+        return result;
+    }
+}
