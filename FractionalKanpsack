@@ -1,0 +1,71 @@
+/****************************************************************
+
+    Following is the class structure of the Pair class:
+
+        class Pair
+        {
+        	int weight;
+	        int value;
+	        Pair(int weight, int value)
+	        {
+		        this.weight = weight;
+		        this.value = value;
+	        }
+	        
+        }
+        
+*****************************************************************/
+
+import java.util.*;
+public class Solution { 
+    public static class Item implements Comparable<Item>{
+        double wtp;
+        int weights;
+        int profit;
+        
+        Item(double wtp,int weights,int profit){
+            this.wtp= wtp;
+            this.weights= weights;
+            this.profit= profit;    
+        }
+        
+        public int compareTo(Item o){  
+           if(this.wtp > o.wtp){
+               return -1;
+           }
+            else if(this.wtp < o.wtp){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+            }  
+    }
+    public static double maximumValue(Pair[] items, int n, int w) {
+            
+        ArrayList<Item> list =new ArrayList<>();
+        
+        for(int i=0;i<items.length;i++){
+            double wt= (double)items[i].value/(double)items[i].weight;
+            list.add(new Item(wt,items[i].weight,items[i].value));
+        }
+        
+        Collections.sort(list);
+        
+        double ans=0;
+        double wsf=0;
+        for(int i=0;i<list.size();i++){
+            if(wsf + list.get(i).weights<=w){
+                wsf+=list.get(i).weights;
+                ans+=list.get(i).profit;
+            }
+            else{
+                double rem= w - wsf;
+                ans+= list.get(i).wtp * rem;
+                break;
+            }
+        }
+        
+        return ans;
+    } 
+}
