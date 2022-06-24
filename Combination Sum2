@@ -1,0 +1,40 @@
+import java.util.*;
+
+public class Solution 
+{
+    public static ArrayList<ArrayList<Integer>> combinationSum2(ArrayList<Integer> arr, int n, int target)
+    {
+        Collections.sort(arr);
+        ArrayList<Integer> ds= new ArrayList<>();
+        
+        ArrayList<ArrayList<Integer>> ans= new ArrayList<>();
+        combinationSum(arr,0,ds,target,ans);
+        
+        return ans;
+    }
+    
+     
+    public static void combinationSum(ArrayList<Integer> nums,int idx,ArrayList<Integer> ds,int target,ArrayList<ArrayList<Integer>> ans){
+        
+        if(target==0){
+            ans.add(new ArrayList<>(ds));
+            return;
+        }
+        
+        for(int i=idx;i<nums.size();i++){
+            
+            //avoding duplicates combinations
+            if(i > idx && nums.get(i)==nums.get(i-1)){
+                continue;
+            }
+            
+            if(nums.get(i) > target){
+                break;
+            }
+            
+            ds.add(nums.get(i));
+            combinationSum(nums,i+1,ds,target-nums.get(i),ans);
+            ds.remove(ds.size()-1);
+        }
+    }
+}
