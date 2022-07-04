@@ -1,0 +1,34 @@
+
+public class Solution {
+
+	public static int longestIncreasingSubsequence(int arr[]) {
+        
+     int n = arr.length;
+     int dp[][] =new int[n+1][n+1];
+	return lis(arr,0,-1,dp);
+	}
+    
+    public static int lis(int arr[],int idx,int prev,int dp[][]){
+        
+        if(idx==arr.length){
+            return 0;
+        }
+        
+        if(dp[idx][prev+1]!=0){
+            return dp[idx][prev+1];
+        }
+        
+        int include=0;
+        if(prev==-1 || arr[prev] < arr[idx]){
+            include = 1 + lis(arr,idx+1,idx,dp);
+        }
+        
+        int exclude= lis(arr,idx+1,prev,dp);
+        
+        int ans= Math.max(include,exclude);
+        dp[idx][prev+1]= ans;
+        
+        return ans;
+    }
+
+}
