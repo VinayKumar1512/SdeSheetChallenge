@@ -1,0 +1,32 @@
+
+public class Solution {
+
+	public static int lcs(String s, String t) {	
+        
+    int dp[][] = new int[s.length()+1][t.length()+1];
+    return lcss(s,t,0,0,dp);
+    }
+    
+    public static int lcss(String s1,String s2,int idx1,int idx2,int dp[][]){
+          
+       if(idx1==s1.length() || idx2==s2.length()){
+           return 0;
+       }
+        
+        if(dp[idx1][idx2]!=0){
+            return dp[idx1][idx2];
+        }
+        int include = 0;
+        if(s1.charAt(idx1)==s2.charAt(idx2)){
+            include= 1 + lcss(s1,s2,idx1+1,idx2+1,dp);
+        }
+        
+        int exclude= Math.max(Math.max(lcss(s1,s2,idx1+1,idx2,dp),lcss(s1,s2,idx1,idx2+1,dp)),lcss(s1,s2,idx1+1,idx2+1,dp));
+        
+        
+      int ans= Math.max(include , exclude);
+       dp[idx1][idx2]= ans;
+        return ans;
+    }
+
+}
