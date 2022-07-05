@@ -1,0 +1,34 @@
+public class Solution {
+    public static boolean subsetSumToK(int n, int k, int arr[]){
+        
+       Boolean dp[][] = new Boolean[n+1][k+1];
+       return subsetSum(n,k,arr,0,dp);
+    }
+    
+    public static boolean subsetSum(int n,int target,int arr[],int idx,Boolean dp[][]){
+        //considering all combinatins when target equal to 0 means their exist a subset sum equal to k
+        if(idx==n){
+            if(target==0){
+                return true;
+            }
+            return false;
+        }
+        if(target < 0){
+            return false;
+        }
+        
+        if(dp[idx][target]!=null){
+            return dp[idx][target];
+        }
+        boolean include= subsetSum(n,target - arr[idx],arr,idx+1,dp);
+        boolean exclude= subsetSum(n,target,arr,idx+1,dp);
+        
+        boolean ans= include || exclude;
+        
+        if(target>=0){
+            dp[idx][target]= ans;
+        }
+        return ans;
+        
+    }
+}
