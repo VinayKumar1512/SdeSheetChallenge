@@ -1,0 +1,39 @@
+import java.util.*;
+public class Solution {
+    public static Boolean wordBreak(String[] arr, int n, String target) {
+
+        HashMap < String, Boolean > hm = new HashMap < > ();
+
+        for (int i = 0; i < arr.length; i++) {
+            hm.put(arr[i], true);
+        }
+       
+        Boolean dp[]= new Boolean[target.length()+1];
+        return wordBreaks(arr, n, target, 0, hm,dp);
+
+    }
+
+    public static boolean wordBreaks(String arr[], int n, String target, int idx, HashMap < String, Boolean > hm,Boolean dp[]) {
+
+        if (idx == target.length()) {
+            return true;
+        }
+
+        if(dp[idx]!=null){
+            return dp[idx];
+        }
+        for (int i = idx; i < target.length(); i++) {
+            String prefix = target.substring(idx, i + 1);
+            if (hm.containsKey(prefix) == true) {
+                boolean res = wordBreaks(arr, n, target, i + 1, hm,dp);
+                dp[idx]= res;
+                if (res == true) {
+                    return true;
+                }
+            }
+        }
+        
+        dp[idx]= false;
+        return false;
+    }
+}
